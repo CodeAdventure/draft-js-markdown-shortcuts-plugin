@@ -41,3 +41,5 @@ demo/public
 .deploy
 test-results.xml
 
+# IDEs
+.idea

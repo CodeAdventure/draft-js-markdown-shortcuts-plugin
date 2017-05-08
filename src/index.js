@@ -28,9 +28,10 @@ function checkCharacterForState(editorState, character) {
   if (editorState === newEditorState) {
     newEditorState = handleLink(editorState, character);
   }
-  if (editorState === newEditorState) {
-    newEditorState = handleInlineStyle(editorState, character);
-  }
+  // NOTE: This is handled separately in onChange
+  // if (editorState === newEditorState) {
+  //   newEditorState = handleInlineStyle(editorState, character);
+  // }
   return newEditorState;
 }
 
@@ -104,24 +105,24 @@ const createMarkdownShortcutsPlugin = (config = {}) => {
           return null;
       }
     },
-    onTab(ev, { getEditorState, setEditorState }) {
-      const editorState = getEditorState();
-      const newEditorState = adjustBlockDepth(editorState, ev);
-      if (newEditorState !== editorState) {
-        setEditorState(newEditorState);
-        return 'handled';
-      }
-      return 'not-handled';
-    },
-    handleReturn(ev, { setEditorState, getEditorState }) {
-      const editorState = getEditorState();
-      const newEditorState = checkReturnForState(editorState, ev);
-      if (editorState !== newEditorState) {
-        setEditorState(newEditorState);
-        return 'handled';
-      }
-      return 'not-handled';
-    },
+    // onTab(ev, { getEditorState, setEditorState }) {
+    //   const editorState = getEditorState();
+    //   const newEditorState = adjustBlockDepth(editorState, ev);
+    //   if (newEditorState !== editorState) {
+    //     setEditorState(newEditorState);
+    //     return 'handled';
+    //   }
+    //   return 'not-handled';
+    // },
+    // handleReturn(ev, { setEditorState, getEditorState }) {
+    //   const editorState = getEditorState();
+    //   const newEditorState = checkReturnForState(editorState, ev);
+    //   if (editorState !== newEditorState) {
+    //     setEditorState(newEditorState);
+    //     return 'handled';
+    //   }
+    //   return 'not-handled';
+    // },
     handleBeforeInput(character, { getEditorState, setEditorState }) {
       if (character !== ' ') {
         return 'not-handled';
@@ -133,6 +134,9 @@ const createMarkdownShortcutsPlugin = (config = {}) => {
         return 'handled';
       }
       return 'not-handled';
+    },
+    onChange(editorState) {
+      return handleInlineStyle(editorState);
     },
     handlePastedText(text, html, { getEditorState, setEditorState }) {
       const editorState = getEditorState();

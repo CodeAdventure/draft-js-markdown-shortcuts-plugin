@@ -14,16 +14,11 @@ const changeCurrentInlineStyle = (editorState, matchArr, style) => {
     anchorOffset: index,
     focusOffset
   });
-  let newContentState = Modifier.replaceText(
+  const newContentState = Modifier.replaceText(
     currentContent,
     wordSelection,
     matchArr[1],
     newStyle
-  );
-  newContentState = Modifier.insertText(
-    newContentState,
-    newContentState.getSelectionAfter(),
-    ' '
   );
   const newEditorState = EditorState.push(
     editorState,
