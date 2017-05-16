@@ -12,12 +12,11 @@ const sharps = (len) => {
 
 const blockTypes = [
   null,
-  'header-one',
-  'header-two',
-  'header-three',
-  'header-four',
-  'header-five',
-  'header-six'
+  'h1',
+  'h2',
+  'h3',
+  'h4',
+  'h5',
 ];
 
 const handleBlockType = (editorState, character) => {
